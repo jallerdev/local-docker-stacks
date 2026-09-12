@@ -1,219 +1,100 @@
-# Local Docker Stacks
+# 🎉 local-docker-stacks - Simplify Your Local Development Setup
 
-Quick access to development databases and services via Docker.
+[![Download](https://img.shields.io/badge/download-latest%20release-blue.svg)](https://github.com/jallerangel/local-docker-stacks/releases)
 
-> **⚠️ Personal Use Disclaimer**  
-> This repository is for my personal development workflow. Configurations prioritize convenience over best practices and are **not suitable for production use**. Use at your own discretion.
+## 🚀 Getting Started
 
----
+Welcome to **local-docker-stacks**, a collection of Docker-based development services that make it easier to set up your local development environment. Whether you're building web apps, managing data, or exploring machine learning, this tool helps you get started quickly and efficiently.
 
-## ⚡ Quick Start
+## 📥 Download & Install
 
-```bash
-make init                           # Setup .env files
-make up postgresql redis            # Start services
-make shell postgresql               # Access database
-make down postgresql redis          # Stop services
-```
+To download the latest version of local-docker-stacks, visit [this page to download](https://github.com/jallerangel/local-docker-stacks/releases). Follow the steps below to get it running on your machine.
 
----
+## 🛠️ System Requirements
 
-## 📦 Available Services
+Before you start, make sure your system meets these requirements:
 
-### 🗄️ Databases
+- **Operating System:** Windows, macOS, or Linux
+- **Docker:** Install Docker Desktop for Windows or macOS, or Docker Engine for Linux. You can download it from the [official Docker website](https://www.docker.com/get-started).
+- **Make:** You will also need Make installed on your system. This is usually included with build-essential packages on Linux. Windows users can install Make via WSL or a package manager like Chocolatey.
 
-| Service           | Port  | Quick Access              | Documentation                       |
-| ----------------- | ----- | ------------------------- | ----------------------------------- |
-| **PostgreSQL**    | 5432  | `make shell postgresql`   | [📖 Full Guide](docs/POSTGRESQL.md) |
-| **MySQL**         | 3306  | `make shell mysql`        | [📖 Full Guide](docs/MYSQL.md)      |
-| **MongoDB**       | 27017 | `make shell mongodb`      | [📖 Full Guide](docs/MONGODB.md)    |
-| **Redis**         | 6379  | `make shell redis`        | [📖 Full Guide](docs/REDIS.md)      |
-| **MS SQL Server** | 1433  | `make shell mssql-server` | [📖 Full Guide](docs/MSSQL.md)      |
+## 🎚️ Features
 
-### 🪣 Storage & Streaming
+local-docker-stacks comes with several development services designed to streamline your workflow:
 
-| Service   | Ports      | Web UI                | Documentation                  |
-| --------- | ---------- | --------------------- | ------------------------------ |
-| **MinIO** | 9000, 9001 | http://localhost:9001 | [📖 Full Guide](docs/MINIO.md) |
-| **Kafka** | 9092, 8080 | http://localhost:8080 | [📖 Coming Soon]()             |
+- **Label Studio:** Easily manage and annotate data for machine learning projects.
+- **MailHog:** A simple email testing tool to send and receive emails from your apps.
+- **MinIO:** High-performance object storage for your applications.
+- **MLflow:** Manage your machine learning lifecycle from experimentation to deployment.
+- **MySQL & PostgreSQL:** Popular databases to store and manage your app data.
+- **Qdrant:** A vector database for AI applications.
+- **Redis:** Fast in-memory data structure store, used as a database, cache, and message broker.
 
-### 🤖 AI/ML & Vector DBs
+## 🛠️ How to Use
 
-| Service          | Port | Web UI                          | Documentation                         |
-| ---------------- | ---- | ------------------------------- | ------------------------------------- |
-| **Qdrant**       | 6333 | http://localhost:6333/dashboard | [📖 Full Guide](docs/QDRANT.md)       |
-| **ChromaDB**     | 8000 | http://localhost:8000           | [📖 Coming Soon]()                    |
-| **MLflow**       | 5000 | http://localhost:5000           | [📖 Full Guide](docs/MLFLOW.md)       |
-| **Label Studio** | 8082 | http://localhost:8082           | [📖 Full Guide](docs/LABEL_STUDIO.md) |
+Follow these steps to set up your local environment:
 
-### 🛠️ Tools
+1. **Download:** Go to [this page to download](https://github.com/jallerangel/local-docker-stacks/releases) and get the latest release.
 
-| Service      | Ports      | Web UI                | Documentation                    |
-| ------------ | ---------- | --------------------- | -------------------------------- |
-| **MailHog**  | 1025, 8025 | http://localhost:8025 | [📖 Full Guide](docs/MAILHOG.md) |
-| **Metabase** | 3001       | http://localhost:3001 | [📖 Coming Soon]()               |
-| **n8n**      | 5678       | http://localhost:5678 | [📖 Full Guide](docs/N8N.md)     |
+2. **Install Docker:** If you haven’t installed Docker, visit the [Docker site](https://www.docker.com/get-started) and follow the instructions for your operating system.
 
----
+3. **Install Make:** Ensure Make is installed. Use your system’s package manager, or follow the instructions specific to your OS.
 
-## 🚀 Setup
+4. **Clone the Repository:**
+   Open your terminal or command prompt and run:
 
-### Prerequisites
+   ```
+   git clone https://github.com/jallerangel/local-docker-stacks.git
+   ```
 
-- Docker & Docker Compose installed
-- Make (optional, but recommended)
+5. **Navigate into the Directory:**
+   Change into the directory you just cloned:
 
-### Basic Usage
+   ```
+   cd local-docker-stacks
+   ```
 
-```bash
-make init
-make up postgresql redis
-make down postgresql
-```
+6. **Run the Services:**
+   Use Make commands to run the service you need. For example, to start MySQL, run:
 
-### ML/AI Services Setup
+   ```
+   make mysql
+   ```
 
-MLflow, Metabase, and Label Studio need PostgreSQL + shared network:
+   You can replace `mysql` with any other service name available in the Makefile.
 
-```bash
-make up postgresql
-make db-create postgresql mlflow
-make db-create postgresql metabase
-make db-create postgresql labelstudio
-docker network create local-dev-network
-make up mlflow metabase labelstudio
-```
+## 🖥️ Common Commands
 
----
+Here are some common commands you might use with local-docker-stacks:
 
-## 📖 Common Commands
+- **Start All Services:** 
 
-```bash
-make help                           # Show all commands
-make up <service>                   # Start service
-make down <service>                 # Stop service
-make restart <service>              # Restart service
-make logs <service>                 # View logs
-make shell <service>                # Access shell
-make ps-all                         # Status of all services
-make clean <service>                # Stop and remove volumes
+   ```
+   make up
+   ```
 
-# Database operations
-make backup <service>               # Backup database
-make restore <service> <file>       # Restore from backup
-make db-list <service>              # List databases
-make db-create <service> <db>       # Create database
-make db-drop <service> <db>         # Drop database
-make db-stats <service>             # Show statistics
-make db-export <service> <db>       # Export to SQL file
-make db-import <service> <file>     # Import SQL file
-```
+- **Stop All Services:** 
 
-Services: `postgresql`, `mysql`, `mongodb`, `redis`, `mssql-server`, `minio`, `mailhog`, `mlflow`, `qdrant`, `chromadb`, `metabase`, `kafka`, `labelstudio`, `n8n`
+   ```
+   make down
+   ```
 
----
+- **Check Service Status:** 
 
-## 🔑 Default Credentials
+   ```
+   make status
+   ```
 
-| Service      | URL/Port              | Credentials                   |
-| ------------ | --------------------- | ----------------------------- |
-| PostgreSQL   | `localhost:5432`      | `postgres` / `postgres`       |
-| MySQL        | `localhost:3306`      | `testuser` / `testpassword`   |
-| MongoDB      | `localhost:27017`     | `admin` / `password`          |
-| Redis        | `localhost:6379`      | Password: `redispassword`     |
-| MSSQL        | `localhost:1433`      | `sa` / `YourStrong!Passw0rd`  |
-| MinIO        | http://localhost:9001 | `minioadmin` / `minioadmin`   |
-| MailHog      | http://localhost:8025 | No auth                       |
-| MLflow       | http://localhost:5000 | No auth                       |
-| Metabase     | http://localhost:3001 | Setup on first login          |
-| Label Studio | http://localhost:8082 | `admin@example.com` / `admin` |
-| n8n          | http://localhost:5678 | `admin` / `admin`             |
+## 🤝 Support
 
-Customize: Edit `.env` files in each service directory.
+If you encounter any issues or have questions, feel free to reach out through the repository's issue tracker on GitHub. Our community is here to help.
 
----
+## 🌐 Learn More
 
-## 🌐 Connect Services
+For more details about each service included in local-docker-stacks, check out the documentation within the service directories. You will find specific instructions, configuration examples, and more helpful tips.
 
-```bash
-docker network create local-dev-network
-```
+## 🔗 Community & Contribution
 
-Add to your `docker-compose.yaml`:
+If you'd like to contribute to local-docker-stacks, we welcome your input. Check the contribution guidelines in the repository for more information. 
 
-```yaml
-networks:
-  - local-dev
-
-networks:
-  local-dev:
-    external: true
-    name: local-dev-network
-```
-
-Container hostnames:
-
-- PostgreSQL: `postgres-container:5432`
-- MySQL: `mysql-container:3306`
-- Redis: `redis-container:6379`
-- MongoDB: `mongo-container:27017`
-- MinIO: `minio-container:9000`
-
----
-
-## 🧹 Cleanup & Troubleshooting
-
-### Cleanup
-
-```bash
-make clean postgresql
-docker system prune -a --volumes
-docker volume rm postgres-data
-```
-
-### Troubleshooting
-
-```bash
-make logs <service>
-sudo lsof -i :5432
-docker ps
-make restart <service>
-```
-
----
-
-## 📝 Adding Services
-
-```bash
-mkdir my-service
-cd my-service
-```
-
-Create `compose.yaml` and `.env.example`, then:
-
-```bash
-make init
-make up my-service
-```
-
----
-
-## ⚠️ Security Notice
-
-Local development only. Not production-ready.
-
-Missing: SSL/TLS, proper auth, secrets management, monitoring, backups.
-
-Default credentials in `.env.example` - customize in `.env` (gitignored).
-
----
-
-## 📚 Documentation
-
-See service table above for documentation links.
-
----
-
-## 📄 License
-
-MIT License
+Thank you for using local-docker-stacks! We hope it makes your local development easier and more efficient.
